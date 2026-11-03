@@ -1,119 +1,200 @@
-# SUSHMITA — THE SERIES
+# Jeel Patel – Personal Portfolio
 
-A cinematic, streaming-inspired portfolio for **Sushmita Dasari**: Full-Stack Developer and B.Tech AI & ML student.
-Every section is an episode, every project is an Original, and the whole site plays like a series.
+A fast, single-page developer portfolio for **Jeel Patel**, Full Stack AI Architect.
+It presents projects, an applied skill set, a working method, and a direct way to start a collaboration — built as a single React application with a lightweight serverless contact endpoint.
 
-> A personal portfolio with a fictional streaming-platform look. It is not affiliated with Netflix or any other streaming service and uses none of their logos.
+---
 
-## Run it locally
+## About the Project
 
-Requires **Node.js 18+**.
+This portfolio is more than a list of technologies: it is a structured walkthrough of how Jeel identifies a problem, designs an approach, builds, and evaluates the result. The site is deliberately content-driven — every fact displayed (introduction, education, projects, skills, process steps, contact details) comes from one central data file, so the presentation layer stays in sync with the actual story.
+
+The project demonstrates:
+
+- **Technical skills** — a skills taxonomy across languages, AI/ML, generative AI, web development, and databases/tools.
+- **Projects** — machine learning and web application work with per-project detail views.
+- **Problem-solving approach** — a dedicated "Process" section documenting the five-step method behind the work.
+- **Professional journey** — background, specialization, and current focus.
+- **Reachability** — a validated contact form backed by a real serverless email pipeline, plus an in-browser resume.
+
+---
+
+## Features
+
+- **Sticky top navigation** with scroll-spy active state, a measured sliding underline indicator, deep-link (`#section`) restoration, and a mobile drawer menu.
+- **Resume link** that opens `resume.pdf` in a new browser tab for in-browser viewing, printing, and download.
+- **Smooth scrolling** powered by Lenis on precise-pointer devices; touch devices and reduced-motion users get native behavior instead.
+- **Canvas wordmark (TechText)** — an oversized, interactive hero title rendered on `<canvas>` with a letter-reveal intro and click feedback.
+- **Scramble headline** — hero phrases cycle with a character-by-character scramble animation, engineered to avoid layout shift between phrases.
+- **Custom cursor** (desktop, fine-pointer only) that grows into a labelled disc over interactive targets, plus magnetic hover effects.
+- **Horizontal projects rail** — native sideways scrolling (drag, shift+wheel, trackpad, touch swipe, arrow controls) without hijacking vertical scroll.
+- **Project detail modal** — lazy-loaded, shared-element transition on desktop, keyboard dismiss, focus management, and scroll locking.
+- **Responsive design** from 320 px to ultrawide, with distinct desktop/mobile navigation layouts.
+- **Motion accessibility** — every animated piece checks `prefers-reduced-motion`, and desktop-only effects are gated by pointer media queries.
+- **Contact form with a real backend** — client-side validation posting to `/api/contact`, which validates, sanitizes, rate-limits, and delivers the message through the Resend email API (no SDK dependency).
+- **SEO & social metadata** — Open Graph and Twitter cards, theme color, `robots.txt`, semantic HTML, a skip-to-content link, and a `<noscript>` fallback.
+- **Performance-minded asset pipeline** — self-hosted subset WOFF2 fonts with preload hints, responsive portrait WebP via `srcset`, and idle-time preloading of the lazy modal chunk.
+
+---
+
+## Tech Stack
+
+| Category | Technology |
+|---|---|
+| Core | [React 18](https://react.dev/), TypeScript 5.8 |
+| Build tooling | Vite 6, `@vitejs/plugin-react`, TypeScript project references (`tsc -b`) |
+| Styling | Tailwind CSS 4 (CSS-first design tokens in `src/index.css`), custom light/dark surfaces |
+| Animation & interaction | Framer Motion 11 (page transitions, scroll-into-view, modal), Lenis 1.1 (smooth scroll) |
+| Contact backend | Node.js serverless function (`api/contact.js`), [Resend](https://resend.com/) HTTPS API, deployed on Vercel |
+| Media pipeline | `sharp` (dev-time script for responsive portrait WebP generation), self-hosted Inter + Bebas Neue fonts |
+| State & data | Typed single-source dataset in TypeScript (`src/data/portfolio.ts`) |
+
+---
+
+## Portfolio Sections
+
+| Section | Description |
+|---|---|
+| **Home** | Full-viewport hero with the interactive canvas wordmark, a cycling scramble headline of focus areas, quick facts, and a portrait with responsive `srcset`. |
+| **About** | Background and current specialization (Computer Science Engineering, AI & ML), presented as a compact editorial card. |
+| **Process** | "How I Actually Solve Problems and Create Solutions" — a five-step numbered method from understanding the problem to evaluating and improving. |
+| **Projects** | Horizontal rail of selected work (machine learning and web projects). Each card opens a lazy-loaded modal with build notes, features, metrics, and stack details. |
+| **Skills** | Five fixed categories — Languages, AI/ML, Generative AI, Web Development, Database & Tools. |
+| **Resume** | Navbar link that opens `public/resume.pdf` in a new tab for viewing, printing, or downloading. |
+| **Contact** | "Let's Build" closing section with the collaboration form and a direct email fallback. |
+
+---
+
+## Project Structure
+
+```
+PortfolioA/
+├── api/
+│   ├── contact.js            # POST /api/contact — validation, rate limiting,
+│   │                         #   sanitization, Resend delivery (serverless)
+│   └── contact.d.ts
+├── public/
+│   ├── assets/               # OG image + responsive portrait WebP set
+│   ├── fonts/                # Self-hosted WOFF2 (Inter var, Bebas Neue)
+│   ├── favicon.svg
+│   ├── resume.pdf            # Resume served at /resume.pdf
+│   └── robots.txt
+├── scripts/
+│   └── build-images.mjs      # sharp pipeline generating portrait assets
+├── src/
+│   ├── components/
+│   │   ├── Navbar.tsx        # Sticky nav, scroll-spy, indicator, mobile drawer
+│   │   ├── Hero.tsx          # Hero section (wordmark, headline, portrait)
+│   │   ├── TechText.tsx      # Canvas wordmark renderer
+│   │   ├── ScrambleHeadline.tsx # Cycle-random scramble hero phrases
+│   │   ├── About.tsx / ProcessSection.tsx / Projects.tsx / Skills.tsx
+│   │   ├── ProjectCard.tsx / ProjectModal.tsx / Poster.tsx / Rail.tsx
+│   │   ├── Collaboration.tsx # Closing contact section
+│   │   ├── ContactForm.tsx   # Validated form posting to /api/contact
+│   │   ├── CustomCursor.tsx  # Desktop custom cursor
+│   │   ├── fx.tsx            # Shared animation primitives (easing, magnetic)
+│   │   └── Scene.tsx         # Plain page-section wrapper
+│   ├── data/
+│   │   └── portfolio.ts      # Single source of truth for all site content
+│   ├── hooks/
+│   │   ├── smoothScroll.tsx  # Lenis provider, scrollTo API, scroll lock
+│   │   └── useMedia.ts       # Pointer / reduced-motion media-query hooks
+│   ├── App.tsx               # Page assembly, deep links, lazy modal
+│   ├── index.css             # Tailwind v4 tokens and global styles
+│   └── main.tsx              # Entry point
+├── index.html                # Meta tags, font preloads, root mount
+├── vite.config.ts            # Dev/preview mounting of /api/contact + env wiring
+├── tsconfig.json / tsconfig.app.json / tsconfig.node.json
+├── package.json
+└── .env.example
+```
+
+**Key directories**
+
+- `src/data/` — every visible fact on the site lives here; edit this file to update content without touching components.
+- `api/` — the serverless contact handler; deployed as-is on Vercel and mirrored by the Vite dev server locally.
+- `public/` — static assets served at the site root, including the resume PDF.
+- `src/components/` — one component per section or interaction, composed in `App.tsx`.
+
+---
+
+## Installation and Local Setup
+
+### Prerequisites
+
+- **Node.js** 18 or newer (LTS recommended) — required by Vite 6
+- **npm** (bundled with Node.js)
+- A Resend account + API key *only if you want the contact form to deliver email* (see [Environment Variables](#environment-variables))
+
+### Setup
 
 ```bash
+# 1. Clone the repository
+git clone <your-repository-url> jeel-patel-portfolio
+cd jeel-patel-portfolio
+
+# 2. Install dependencies
 npm install
+
+# 3. Start the development server (http://localhost:5173)
 npm run dev
 ```
 
-Open the URL Vite prints (usually http://localhost:5173).
+The Vite dev server also mounts `api/contact.js` at `/api/contact`, so the contact form flows through the real serverless handler locally — even with no configuration it responds correctly (a proper failure state, never a fake success).
 
-Production build:
+### Other scripts
 
-```bash
-npm run build
-npm run preview
-```
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Vite dev server with HMR and the local contact API |
+| `npm run build` | Type-check (`tsc -b`) then production build into `dist/` |
+| `npm run preview` | Serve the production build locally (includes the contact API) |
+| `npm run images` | Regenerate the optimized portrait assets with sharp — requires the source photos (`pic1.jpeg`, `pic.png`) in the project root |
 
-The static site is written to `dist/` and can be deployed as-is to Vercel, Netlify, GitHub Pages or any static host.
+---
 
-## Updating the content
+## Environment Variables
 
-**All content lives in one file: [`src/data/portfolio.ts`](src/data/portfolio.ts).** It was generated from the resume, and every component reads from it.
+The contact endpoint needs three **server-side** variables. They are read inside `api/contact.js` from the server process — never sent to the browser, and never prefixed with `VITE_`.
 
-| To change… | Edit |
-| --- | --- |
-| Name, intro, email, LinkedIn, GitHub | `profile` |
-| A project, or a new one | `projects` (add an object; it appears in Originals, the overlay, the resume sheet and the counts) |
-| Achievements / certifications | `achievements`, `certifications` |
-| Skills and their "where it's used" notes | `skillCategories`, `skillEvidence` |
-| Seasons and episodes (My Journey) | `seasons` |
-| Top 10 row | `topPicks` |
-| ▶ Play Intro highlight reel | `introSlides` |
-| Profile order (Recruiter / Developer / Creative) | `viewerProfiles` |
-| Opening studio card text | `profile.originalLabel` |
+| Variable | Purpose | Notes |
+|---|---|---|
+| `RESEND_API_KEY` | Authenticates the Resend delivery request | Required for actual email delivery. Without it, a valid submission correctly fails instead of pretending to succeed. |
+| `CONTACT_FROM` | `From` header identity, e.g. `Portfolio Contact <hello@your-domain.com>` | The sender domain must be verified in Resend. `onboarding@resend.dev` works for quick tests but only delivers to your own address. |
+| `CONTACT_TO` | Recipient inbox for contact-form messages | Optional; defaults to `jeelpatel611@gmail.com`. |
 
-**Resume:** replace `public/assets/Sushmita_Dasari_Resume.pdf`.
-
-**Photo:** replace `pic1.jpeg` (high-res photo) and `pic.png` (background-removed cutout with the same framing), then run:
+**Local:** copy the example file, fill in the values, and restart the dev/preview server (Vite loads `.env` only at startup):
 
 ```bash
-npm run images
+cp .env.example .env
 ```
 
-This rebuilds the responsive WebP portraits and the social share image in `public/assets/`.
+**Deployment (Vercel):** add the same three variables under *Project → Settings → Environment Variables*, then redeploy. The `api/` directory is auto-detected as a serverless function — no extra configuration is required.
 
-## What's inside
+Secrets are never cached in the repository; `.env` is gitignored and only `.env.example` is tracked.
 
-```
-src/
-  data/portfolio.ts        ← single source of truth (from the resume)
-  App.tsx                  ← stages: opening → profile select → home; overlays
-  components/
-    OpeningSequence        ← black → studio card → SUSHMITA → THE SERIES → portrait → ▶ PLAY
-    ProfileSelector        ← "Who's watching?" (changes section order only)
-    Navbar                 ← hide-on-scroll nav, profile switcher, mobile menu
-    Hero                   ← billboard: parallax portrait, particles, light streaks, floating chips
-    PlayIntro              ← ▶ Play Intro: zoom into portrait → highlight reel (pause, ← →, tap zones)
-    ContinueWatching       ← cards with real "watched" progress bars
-    About                  ← The Pilot
-    Seasons / EpisodeCard  ← My Journey as seasons and episodes
-    Originals / ProjectCard← pinned horizontal sequence on desktop, swipe rail on touch
-    ProjectModal           ← full-screen project overlay with a shared-element transition
-    TopPicks               ← Top 10-style row
-    Skills                 ← skill genres; each card shows where the skill appears
-    Achievements           ← award-poster cards + certification rail (links to credentials)
-    ResumeViewer/ResumeModal ← designed resume sheet, PDF viewer, download
-    FinalCTA               ← TO BE CONTINUED… + contact links
-    CustomCursor, fx.tsx   ← cursor states, magnetic buttons, 3D tilt, text reveals, particles
-  hooks/                   ← Lenis smooth scroll + scroll lock, media queries, watch progress
-scripts/build-images.mjs   ← portrait/share-image pipeline (sharp)
-```
+---
 
-**Stack:** React 18, TypeScript, Vite 6, Tailwind CSS 4, Framer Motion 11, Lenis.
+## Contact
 
-## Accessibility and performance
+- **Email:** [jeelpatel611@gmail.com](mailto:jeelpatel611@gmail.com)
+- **Location:** India
+- **Open to:** project collaborations, hackathons, internships
 
-- `prefers-reduced-motion` is respected: smooth scroll, the custom cursor, tilt, particles, grain and the pinned horizontal scroll turn off, and the opening jumps straight to its final frame.
-- Hover effects only run on devices with a precise pointer. Touch devices get tap interactions and native swipe rails.
-- The custom cursor appears only with a mouse or trackpad.
-- Overlays close with Esc, and the highlight reel supports Space and the ← → keys.
-- Portraits are responsive WebP files (25–90 KB). Overlays are code-split, and particles pause when they're off screen.
+GitHub and LinkedIn links can be wired up in `src/data/portfolio.ts` (`profile.links`) — the contact section renders them automatically once they are set.
 
-## Keyboard shortcuts
+---
 
-- **Opening:** Enter or Esc skips it.
-- **Play Intro:** Space pauses, ← and → change slides, Esc closes.
-- **Project and resume overlays:** Esc closes.
+## Future Improvements
 
-## Contact form and email delivery
+Planned / possible enhancements (not yet implemented):
 
-The `#contact` section posts to `/api/contact` (`src/components/ContactForm.tsx`). In development the Vite dev server mounts the same handler (`contactApi()` in `vite.config.ts`); in production **Vercel** auto-detects `api/contact.js` as a Node function and serves it at the same path. There is no separate backend to run.
+- **Repository and live-demo links for each project** — the data model already supports `github` and `demo` fields per project; they are waiting to be filled as projects ship.
+- **Real project screenshots** — the preview slot renders an intentional placeholder today; add real captures via the `preview` field.
+- **GitHub / LinkedIn links** in the contact section (currently unset in the data file).
+- **Automated tests and CI** — headless end-to-end checks for navigation and the contact flow, run on push.
+- **Theme variants** — the palette is fixed by design; a dark/light toggle is a possible future addition.
 
-The handler validates and sanitises every field, drops honeypot submissions, rate-limits to 5 messages per minute per IP, caps the request body at 16 KB, and sends a **plain-text** email through Resend's HTTPS API (no SDK dependency). The visitor's address is used only as `Reply-To`; the `From` identity is always the verified sender from `CONTACT_FROM`. The browser receives only `{ ok: true }` or `{ ok: false, error }` — keys, provider responses and stack traces never leave the server.
+---
 
-### Server-side environment variables
-
-Copy `.env.example` to `.env` for local development, or add the same variables in Vercel → Project → Settings → Environment Variables. They must **not** be prefixed with `VITE_`.
-
-| Variable | Required | Purpose |
-| --- | --- | --- |
-| `RESEND_API_KEY` | yes | Resend API key (`re_...`). Without it the endpoint returns a 503 and the form shows a "not configured" message. |
-| `CONTACT_FROM` | recommended | Verified sender, e.g. `Portfolio Contact <hello@yourdomain.com>`. Defaults to `Portfolio Contact <onboarding@resend.dev>`. |
-| `CONTACT_TO` | recommended | Inbox that receives messages. Defaults to `jeelpatel611@gmail.com`. |
-
-### Remaining setup (cannot be done in code)
-
-1. Create a free Resend account and API key.
-2. Verify a sending domain under Resend → Domains (add the DNS records it gives you). Until a domain is verified, keep `CONTACT_FROM` on `onboarding@resend.dev` — Resend then delivers **only to the Resend account owner's address**, so make sure that account is `jeelpatel611@gmail.com` or switch to the verified domain before launch.
-3. Put the key and sender into `.env` locally and into the Vercel project settings, then redeploy.
-
-Until step 3 is done the form is wired end-to-end but returns the explicit "Email delivery isn't configured yet" error instead of pretending to succeed.
+*Content note: all copy, projects, skills, and process steps on the site are maintained in `src/data/portfolio.ts`.*
