@@ -3,22 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>Sushmita — The Series</title>
-    <meta name="description" content="Sushmita Dasari — Full-Stack Developer and B.Tech AI & ML student. A cinematic, streaming-inspired portfolio." />
+    <title>Jeel Patel — Portfolio</title>
+    <meta name="description" content="Jeel Patel — AI/ML Student &amp; Developer. Computer Science Engineering student specializing in AI &amp; ML." />
     <meta name="theme-color" content="#07070a" />
-    <meta property="og:title" content="Sushmita — The Series" />
-    <meta property="og:description" content="Full-Stack Developer • AI / ML • Java. Every project is an Original." />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Jeel Patel — Portfolio" />
+    <meta property="og:description" content="AI/ML Student &amp; Developer • Intelligent Systems • Machine Learning. Projects, process, and how I build." />
     <meta property="og:image" content="/assets/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Jeel Patel — Portfolio" />
+    <meta name="twitter:description" content="AI/ML Student &amp; Developer • Intelligent Systems • Machine Learning." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="preload" as="image" href="/assets/portrait-720.webp" type="image/webp" />
+
+    <!-- Self-hosted, latin-only subsets: no third-party CSS round-trip on the
+         critical path. `crossorigin` is required for font preloads. -->
+    <link rel="preload" href="/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/bebas-neue-latin.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>
-    <noscript>Sushmita Dasari — Full-Stack Developer. Please enable JavaScript to watch the series.</noscript>
+    <noscript>Jeel Patel — AI/ML Student &amp; Developer. Portfolio of projects, skills, and process. Please enable JavaScript to view the interactive site.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

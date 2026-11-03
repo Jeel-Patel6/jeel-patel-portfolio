@@ -93,3 +93,27 @@ scripts/build-images.mjs   ← portrait/share-image pipeline (sharp)
 - **Opening:** Enter or Esc skips it.
 - **Play Intro:** Space pauses, ← and → change slides, Esc closes.
 - **Project and resume overlays:** Esc closes.
+
+## Contact form and email delivery
+
+The `#contact` section posts to `/api/contact` (`src/components/ContactForm.tsx`). In development the Vite dev server mounts the same handler (`contactApi()` in `vite.config.ts`); in production **Vercel** auto-detects `api/contact.js` as a Node function and serves it at the same path. There is no separate backend to run.
+
+The handler validates and sanitises every field, drops honeypot submissions, rate-limits to 5 messages per minute per IP, caps the request body at 16 KB, and sends a **plain-text** email through Resend's HTTPS API (no SDK dependency). The visitor's address is used only as `Reply-To`; the `From` identity is always the verified sender from `CONTACT_FROM`. The browser receives only `{ ok: true }` or `{ ok: false, error }` — keys, provider responses and stack traces never leave the server.
+
+### Server-side environment variables
+
+Copy `.env.example` to `.env` for local development, or add the same variables in Vercel → Project → Settings → Environment Variables. They must **not** be prefixed with `VITE_`.
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `RESEND_API_KEY` | yes | Resend API key (`re_...`). Without it the endpoint returns a 503 and the form shows a "not configured" message. |
+| `CONTACT_FROM` | recommended | Verified sender, e.g. `Portfolio Contact <hello@yourdomain.com>`. Defaults to `Portfolio Contact <onboarding@resend.dev>`. |
+| `CONTACT_TO` | recommended | Inbox that receives messages. Defaults to `jeelpatel611@gmail.com`. |
+
+### Remaining setup (cannot be done in code)
+
+1. Create a free Resend account and API key.
+2. Verify a sending domain under Resend → Domains (add the DNS records it gives you). Until a domain is verified, keep `CONTACT_FROM` on `onboarding@resend.dev` — Resend then delivers **only to the Resend account owner's address**, so make sure that account is `jeelpatel611@gmail.com` or switch to the verified domain before launch.
+3. Put the key and sender into `.env` locally and into the Vercel project settings, then redeploy.
+
+Until step 3 is done the form is wired end-to-end but returns the explicit "Email delivery isn't configured yet" error instead of pretending to succeed.

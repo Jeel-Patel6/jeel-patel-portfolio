@@ -25,18 +25,58 @@ export default function CustomCursor() {
   useEffect(() => {
     if (!enabled) return;
     document.documentElement.classList.add('has-custom-cursor');
-    const move = (e: PointerEvent) => {
+    let raf = 0;
+    let latest: PointerEvent | null = null;
+    let lastMode: string | null = null;
+    let lastLink = false;
+    let lastVisible = false;
+    let lastDown = false;
+    // One rAF-coalesced read per frame: position goes to motion values (no React
+    // render) and the appearance state only updates when it actually changes.
+    // Before this, every raw pointermove event triggered up to three setStates.
+    const paint = () => {
+      raf = 0;
+      const e = latest;
+      if (!e) return;
       x.set(e.clientX);
       y.set(e.clientY);
-      setVisible(true);
       const t = e.target as HTMLElement | null;
       const tagged = t?.closest<HTMLElement>('[data-cursor]');
-      setMode(tagged?.dataset.cursor ?? null);
-      setHoverLink(!tagged && !!t?.closest('a,button,[role="button"]'));
+      const nextMode = tagged?.dataset.cursor ?? null;
+      const nextLink = !tagged && !!t?.closest('a,button,[role="button"]');
+      if (nextMode !== lastMode) {
+        lastMode = nextMode;
+        setMode(nextMode);
+      }
+      if (nextLink !== lastLink) {
+        lastLink = nextLink;
+        setHoverLink(nextLink);
+      }
+      if (!lastVisible) {
+        lastVisible = true;
+        setVisible(true);
+      }
     };
-    const leave = () => setVisible(false);
-    const press = () => setDown(true);
-    const release = () => setDown(false);
+    const move = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      latest = e;
+      if (!raf) raf = requestAnimationFrame(paint);
+    };
+    const leave = () => {
+      if (!lastVisible) return;
+      lastVisible = false;
+      setVisible(false);
+    };
+    const press = () => {
+      if (lastDown) return;
+      lastDown = true;
+      setDown(true);
+    };
+    const release = () => {
+      if (!lastDown) return;
+      lastDown = false;
+      setDown(false);
+    };
     window.addEventListener('pointermove', move, { passive: true });
     document.addEventListener('pointerleave', leave);
     window.addEventListener('pointerdown', press);
@@ -45,14 +85,19 @@ export default function CustomCursor() {
       document.documentElement.classList.remove('has-custom-cursor');
       window.removeEventListener('pointermove', move);
       document.removeEventListener('pointerleave', leave);
-      window.removeEventListener('pointerdown', press);
-      window.removeEventListener('pointerup', release);
+      document.removeEventListener('pointerdown', press);
+      document.removeEventListener('pointerup', release);
     };
   }, [enabled, x, y]);
 
   if (!enabled) return null;
   const label = mode ? LABELS[mode] : null;
   const size = label ? (mode === 'view' ? 72 : 52) : hoverLink ? 34 : 10;
+
+  const dotColor = 'rgba(22,22,22,1)';
+  const labelColor = 'rgba(22,22,22,0.92)';
+  const linkColor = 'rgba(22,22,22,0.06)';
+  const linkBorder = 'rgba(22,22,22,0.45)';
 
   return (
     <motion.div
@@ -64,8 +109,8 @@ export default function CustomCursor() {
         height: size,
         opacity: visible ? 1 : 0,
         scale: down ? 0.85 : 1,
-        backgroundColor: label ? 'rgba(229,19,43,0.92)' : hoverLink ? 'rgba(244,241,236,0.08)' : 'rgba(244,241,236,1)',
-        borderColor: hoverLink && !label ? 'rgba(244,241,236,0.7)' : 'rgba(244,241,236,0)',
+        backgroundColor: label ? labelColor : hoverLink ? linkColor : dotColor,
+        borderColor: hoverLink && !label ? linkBorder : 'rgba(255,255,255,0)',
       }}
       transition={{ type: 'spring', stiffness: 420, damping: 30 }}
     >

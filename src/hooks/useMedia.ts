@@ -14,5 +14,6 @@ export function useMedia(query: string, fallback = false) {
 
 /** True on devices with a precise pointer (mouse / trackpad) — gates hover-only effects. */
 export const useFinePointer = () => useMedia('(hover: hover) and (pointer: fine)');
+/** True on touch-first devices (phones/tablets) — native scrolling is better there. */
+export const useCoarsePointer = () => useMedia('(hover: none) and (pointer: coarse)');
 export const useReducedMotionPref = () => useMedia('(prefers-reduced-motion: reduce)');
-export const useDesktop = () => useMedia('(min-width: 1024px)');
