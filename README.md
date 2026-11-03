@@ -1,39 +1,42 @@
 # Jeel Patel – Personal Portfolio
 
 A fast, single-page developer portfolio for **Jeel Patel**, Full Stack AI Architect.
-It presents projects, an applied skill set, a working method, and a direct way to start a collaboration — built as a single React application with a lightweight serverless contact endpoint.
+
+The portfolio presents selected projects, technical skills, a problem-solving process, and a direct way to get in touch. It is built as a React application with a serverless contact endpoint.
 
 ---
 
 ## About the Project
 
-This portfolio is more than a list of technologies: it is a structured walkthrough of how Jeel identifies a problem, designs an approach, builds, and evaluates the result. The site is deliberately content-driven — every fact displayed (introduction, education, projects, skills, process steps, contact details) comes from one central data file, so the presentation layer stays in sync with the actual story.
+This portfolio is more than a list of technologies: it is a structured walkthrough of how I identify a problem, design an approach, build a solution, and evaluate the result.
 
-The project demonstrates:
+The site is content-driven. Information such as the introduction, education, projects, skills, process steps, and contact details is maintained in a central data file so the presentation stays consistent.
 
-- **Technical skills** — a skills taxonomy across languages, AI/ML, generative AI, web development, and databases/tools.
-- **Projects** — machine learning and web application work with per-project detail views.
-- **Problem-solving approach** — a dedicated "Process" section documenting the five-step method behind the work.
-- **Professional journey** — background, specialization, and current focus.
-- **Reachability** — a validated contact form backed by a real serverless email pipeline, plus an in-browser resume.
+The project highlights:
+
+- **Technical skills** across programming languages, AI/ML, generative AI, web development, and databases/tools.
+- **Projects** involving machine learning and web application development.
+- **Problem-solving approach** through a dedicated five-step process.
+- **Professional journey**, background, specialization, and current focus.
+- **Contact and resume access** through a contact form and an in-browser resume link.
 
 ---
 
 ## Features
 
-- **Sticky top navigation** with scroll-spy active state, a measured sliding underline indicator, deep-link (`#section`) restoration, and a mobile drawer menu.
-- **Resume link** that opens `resume.pdf` in a new browser tab for in-browser viewing, printing, and download.
-- **Smooth scrolling** powered by Lenis on precise-pointer devices; touch devices and reduced-motion users get native behavior instead.
-- **Canvas wordmark (TechText)** — an oversized, interactive hero title rendered on `<canvas>` with a letter-reveal intro and click feedback.
-- **Scramble headline** — hero phrases cycle with a character-by-character scramble animation, engineered to avoid layout shift between phrases.
-- **Custom cursor** (desktop, fine-pointer only) that grows into a labelled disc over interactive targets, plus magnetic hover effects.
-- **Horizontal projects rail** — native sideways scrolling (drag, shift+wheel, trackpad, touch swipe, arrow controls) without hijacking vertical scroll.
-- **Project detail modal** — lazy-loaded, shared-element transition on desktop, keyboard dismiss, focus management, and scroll locking.
-- **Responsive design** from 320 px to ultrawide, with distinct desktop/mobile navigation layouts.
-- **Motion accessibility** — every animated piece checks `prefers-reduced-motion`, and desktop-only effects are gated by pointer media queries.
-- **Contact form with a real backend** — client-side validation posting to `/api/contact`, which validates, sanitizes, rate-limits, and delivers the message through the Resend email API (no SDK dependency).
-- **SEO & social metadata** — Open Graph and Twitter cards, theme color, `robots.txt`, semantic HTML, a skip-to-content link, and a `<noscript>` fallback.
-- **Performance-minded asset pipeline** — self-hosted subset WOFF2 fonts with preload hints, responsive portrait WebP via `srcset`, and idle-time preloading of the lazy modal chunk.
+- Sticky top navigation with scroll-aware active state, a sliding underline indicator, deep-link restoration, and a mobile drawer menu.
+- Resume link that opens `resume.pdf` in a new browser tab.
+- Smooth scrolling with Lenis on supported pointer devices, while touch devices and reduced-motion users use native behavior.
+- Interactive canvas-based hero wordmark (TechText) with a letter-reveal intro and click feedback.
+- Animated hero headline with character-by-character text scrambling.
+- Desktop custom cursor and magnetic hover effects.
+- Horizontally scrollable projects rail with drag, trackpad, touch, and arrow controls.
+- Project detail modal with lazy loading, keyboard dismissal, focus management, and scroll locking.
+- Responsive layouts for mobile, desktop, and ultrawide screens.
+- Reduced-motion support and pointer-based gating for desktop-only effects.
+- Contact form that submits to `/api/contact` for server-side validation and email delivery through the Resend API.
+- SEO and social metadata, including Open Graph and Twitter cards, semantic HTML, `robots.txt`, and a skip-to-content link.
+- Optimized asset pipeline with self-hosted WOFF2 fonts and responsive WebP imagery.
 
 ---
 
@@ -41,13 +44,13 @@ The project demonstrates:
 
 | Category | Technology |
 |---|---|
-| Core | [React 18](https://react.dev/), TypeScript 5.8 |
-| Build tooling | Vite 6, `@vitejs/plugin-react`, TypeScript project references (`tsc -b`) |
-| Styling | Tailwind CSS 4 (CSS-first design tokens in `src/index.css`), custom light/dark surfaces |
-| Animation & interaction | Framer Motion 11 (page transitions, scroll-into-view, modal), Lenis 1.1 (smooth scroll) |
-| Contact backend | Node.js serverless function (`api/contact.js`), [Resend](https://resend.com/) HTTPS API, deployed on Vercel |
-| Media pipeline | `sharp` (dev-time script for responsive portrait WebP generation), self-hosted Inter + Bebas Neue fonts |
-| State & data | Typed single-source dataset in TypeScript (`src/data/portfolio.ts`) |
+| Core | React 18, TypeScript 5.8 |
+| Build tooling | Vite 6, `@vitejs/plugin-react`, TypeScript project references |
+| Styling | Tailwind CSS 4, custom CSS design tokens |
+| Animation and interaction | Framer Motion 11, Lenis 1.1 |
+| Contact backend | Node.js serverless function, Resend HTTPS API, Vercel |
+| Media pipeline | `sharp`, self-hosted Inter and Bebas Neue fonts |
+| State and content | Typed TypeScript data in `src/data/portfolio.ts` |
 
 ---
 
@@ -55,66 +58,75 @@ The project demonstrates:
 
 | Section | Description |
 |---|---|
-| **Home** | Full-viewport hero with the interactive canvas wordmark, a cycling scramble headline of focus areas, quick facts, and a portrait with responsive `srcset`. |
-| **About** | Background and current specialization (Computer Science Engineering, AI & ML), presented as a compact editorial card. |
-| **Process** | "How I Actually Solve Problems and Create Solutions" — a five-step numbered method from understanding the problem to evaluating and improving. |
-| **Projects** | Horizontal rail of selected work (machine learning and web projects). Each card opens a lazy-loaded modal with build notes, features, metrics, and stack details. |
-| **Skills** | Five fixed categories — Languages, AI/ML, Generative AI, Web Development, Database & Tools. |
-| **Resume** | Navbar link that opens `public/resume.pdf` in a new tab for viewing, printing, or downloading. |
-| **Contact** | "Let's Build" closing section with the collaboration form and a direct email fallback. |
+| **Home** | Hero section with the interactive wordmark, animated headline, quick facts, and portrait. |
+| **About** | Background and current specialization in Computer Science Engineering, AI, and ML. |
+| **Process** | “How I Actually Solve Problems and Create Solutions” — a five-step approach from understanding a problem to evaluating and improving the solution. |
+| **Projects** | Selected machine learning and web projects, with detail views for build notes, features, metrics, and technology stack. |
+| **Skills** | Skills organized into Languages, AI/ML, Generative AI, Web Development, and Database & Tools. |
+| **Resume** | Navigation link to `public/resume.pdf`, which opens in a new tab. |
+| **Contact** | Collaboration section with the contact form and a direct email option. |
 
 ---
 
 ## Project Structure
 
-```
+```text
 PortfolioA/
 ├── api/
-│   ├── contact.js            # POST /api/contact — validation, rate limiting,
-│   │                         #   sanitization, Resend delivery (serverless)
+│   ├── contact.js                 # Contact API: validation, rate limiting,
+│   │                              # sanitization, and Resend delivery
 │   └── contact.d.ts
 ├── public/
-│   ├── assets/               # OG image + responsive portrait WebP set
-│   ├── fonts/                # Self-hosted WOFF2 (Inter var, Bebas Neue)
+│   ├── assets/                    # Social image and responsive portrait images
+│   ├── fonts/                     # Self-hosted WOFF2 fonts
 │   ├── favicon.svg
-│   ├── resume.pdf            # Resume served at /resume.pdf
+│   ├── resume.pdf                 # Resume served at /resume.pdf
 │   └── robots.txt
 ├── scripts/
-│   └── build-images.mjs      # sharp pipeline generating portrait assets
+│   └── build-images.mjs           # Image optimization script
 ├── src/
 │   ├── components/
-│   │   ├── Navbar.tsx        # Sticky nav, scroll-spy, indicator, mobile drawer
-│   │   ├── Hero.tsx          # Hero section (wordmark, headline, portrait)
-│   │   ├── TechText.tsx      # Canvas wordmark renderer
-│   │   ├── ScrambleHeadline.tsx # Cycle-random scramble hero phrases
-│   │   ├── About.tsx / ProcessSection.tsx / Projects.tsx / Skills.tsx
-│   │   ├── ProjectCard.tsx / ProjectModal.tsx / Poster.tsx / Rail.tsx
-│   │   ├── Collaboration.tsx # Closing contact section
-│   │   ├── ContactForm.tsx   # Validated form posting to /api/contact
-│   │   ├── CustomCursor.tsx  # Desktop custom cursor
-│   │   ├── fx.tsx            # Shared animation primitives (easing, magnetic)
-│   │   └── Scene.tsx         # Plain page-section wrapper
+│   │   ├── Navbar.tsx
+│   │   ├── Hero.tsx
+│   │   ├── TechText.tsx
+│   │   ├── ScrambleHeadline.tsx
+│   │   ├── About.tsx
+│   │   ├── ProcessSection.tsx
+│   │   ├── Projects.tsx
+│   │   ├── Skills.tsx
+│   │   ├── ProjectCard.tsx
+│   │   ├── ProjectModal.tsx
+│   │   ├── Poster.tsx
+│   │   ├── Rail.tsx
+│   │   ├── Collaboration.tsx
+│   │   ├── ContactForm.tsx
+│   │   ├── CustomCursor.tsx
+│   │   ├── fx.tsx
+│   │   └── Scene.tsx
 │   ├── data/
-│   │   └── portfolio.ts      # Single source of truth for all site content
+│   │   └── portfolio.ts           # Central source for portfolio content
 │   ├── hooks/
-│   │   ├── smoothScroll.tsx  # Lenis provider, scrollTo API, scroll lock
-│   │   └── useMedia.ts       # Pointer / reduced-motion media-query hooks
-│   ├── App.tsx               # Page assembly, deep links, lazy modal
-│   ├── index.css             # Tailwind v4 tokens and global styles
-│   └── main.tsx              # Entry point
-├── index.html                # Meta tags, font preloads, root mount
-├── vite.config.ts            # Dev/preview mounting of /api/contact + env wiring
-├── tsconfig.json / tsconfig.app.json / tsconfig.node.json
+│   │   ├── smoothScroll.tsx
+│   │   └── useMedia.ts
+│   ├── App.tsx
+│   ├── index.css
+│   └── main.tsx
+├── index.html
+├── vite.config.ts
+├── tsconfig.json
+├── tsconfig.app.json
+├── tsconfig.node.json
 ├── package.json
 └── .env.example
 ```
 
-**Key directories**
+### Key Directories
 
-- `src/data/` — every visible fact on the site lives here; edit this file to update content without touching components.
-- `api/` — the serverless contact handler; deployed as-is on Vercel and mirrored by the Vite dev server locally.
-- `public/` — static assets served at the site root, including the resume PDF.
-- `src/components/` — one component per section or interaction, composed in `App.tsx`.
+- `src/data/` — portfolio content such as profile details, projects, skills, and process steps.
+- `src/components/` — page sections and reusable interface components.
+- `api/` — serverless contact handler.
+- `public/` — static files served from the site root, including fonts, images, and the resume.
+- `scripts/` — utility scripts for asset generation.
 
 ---
 
@@ -122,56 +134,62 @@ PortfolioA/
 
 ### Prerequisites
 
-- **Node.js** 18 or newer (LTS recommended) — required by Vite 6
-- **npm** (bundled with Node.js)
-- A Resend account + API key *only if you want the contact form to deliver email* (see [Environment Variables](#environment-variables))
+- Node.js 18 or newer.
+- npm (included with Node.js).
+- A Resend account and API key if you want the contact form to send real emails.
 
 ### Setup
 
 ```bash
-# 1. Clone the repository
-git clone <your-repository-url> jeel-patel-portfolio
+# Clone the repository
+git clone <your-repository-url>
 cd jeel-patel-portfolio
 
-# 2. Install dependencies
+# Install dependencies
 npm install
 
-# 3. Start the development server (http://localhost:5173)
+# Start the development server
 npm run dev
 ```
 
-The Vite dev server also mounts `api/contact.js` at `/api/contact`, so the contact form flows through the real serverless handler locally — even with no configuration it responds correctly (a proper failure state, never a fake success).
+The Vite development server is configured to expose the contact endpoint locally. Actual email delivery requires the environment variables described below.
 
-### Other scripts
+### Available Scripts
 
 | Command | Purpose |
 |---|---|
-| `npm run dev` | Vite dev server with HMR and the local contact API |
-| `npm run build` | Type-check (`tsc -b`) then production build into `dist/` |
-| `npm run preview` | Serve the production build locally (includes the contact API) |
-| `npm run images` | Regenerate the optimized portrait assets with sharp — requires the source photos (`pic1.jpeg`, `pic.png`) in the project root |
+| `npm run dev` | Starts the Vite development server with hot module replacement. |
+| `npm run build` | Runs the TypeScript build checks and creates the production build in `dist/`. |
+| `npm run preview` | Serves the production build locally. |
+| `npm run images` | Regenerates optimized portrait assets using `sharp`; requires the source images expected by the script. |
 
 ---
 
 ## Environment Variables
 
-The contact endpoint needs three **server-side** variables. They are read inside `api/contact.js` from the server process — never sent to the browser, and never prefixed with `VITE_`.
+The contact endpoint uses server-side environment variables. Do not expose these values in client-side code or commit real secrets to Git.
 
-| Variable | Purpose | Notes |
-|---|---|---|
-| `RESEND_API_KEY` | Authenticates the Resend delivery request | Required for actual email delivery. Without it, a valid submission correctly fails instead of pretending to succeed. |
-| `CONTACT_FROM` | `From` header identity, e.g. `Portfolio Contact <hello@your-domain.com>` | The sender domain must be verified in Resend. `onboarding@resend.dev` works for quick tests but only delivers to your own address. |
-| `CONTACT_TO` | Recipient inbox for contact-form messages | Optional; defaults to `jeelpatel611@gmail.com`. |
+| Variable | Purpose |
+|---|---|
+| `RESEND_API_KEY` | API key used to authenticate email delivery through Resend. |
+| `CONTACT_FROM` | Sender identity for contact-form emails. The sender domain must be verified with Resend. |
+| `CONTACT_TO` | Destination inbox for contact-form submissions. If omitted, the endpoint defaults to `jeelpatel611@gmail.com`. |
 
-**Local:** copy the example file, fill in the values, and restart the dev/preview server (Vite loads `.env` only at startup):
+### Local Configuration
+
+Create a local `.env` file from the example:
 
 ```bash
 cp .env.example .env
 ```
 
-**Deployment (Vercel):** add the same three variables under *Project → Settings → Environment Variables*, then redeploy. The `api/` directory is auto-detected as a serverless function — no extra configuration is required.
+Add the required values to `.env`, then restart the development server.
 
-Secrets are never cached in the repository; `.env` is gitignored and only `.env.example` is tracked.
+### Vercel Deployment
+
+Add the same environment variables in **Vercel → Project → Settings → Environment Variables**, then redeploy the project.
+
+Keep `.env` out of version control. Only commit `.env.example`, with placeholder values and no secrets.
 
 ---
 
@@ -179,22 +197,22 @@ Secrets are never cached in the repository; `.env` is gitignored and only `.env.
 
 - **Email:** [jeelpatel611@gmail.com](mailto:jeelpatel611@gmail.com)
 - **Location:** India
-- **Open to:** project collaborations, hackathons, internships
+- **Open to:** Project collaborations, hackathons, internships, and technical discussions.
 
-GitHub and LinkedIn links can be wired up in `src/data/portfolio.ts` (`profile.links`) — the contact section renders them automatically once they are set.
-
----
-
-## Future Improvements
-
-Planned / possible enhancements (not yet implemented):
-
-- **Repository and live-demo links for each project** — the data model already supports `github` and `demo` fields per project; they are waiting to be filled as projects ship.
-- **Real project screenshots** — the preview slot renders an intentional placeholder today; add real captures via the `preview` field.
-- **GitHub / LinkedIn links** in the contact section (currently unset in the data file).
-- **Automated tests and CI** — headless end-to-end checks for navigation and the contact flow, run on push.
-- **Theme variants** — the palette is fixed by design; a dark/light toggle is a possible future addition.
+Social profile links can be added to the portfolio data in `src/data/portfolio.ts` if they are not already configured.
 
 ---
 
-*Content note: all copy, projects, skills, and process steps on the site are maintained in `src/data/portfolio.ts`.*
+## Possible Future Improvements
+
+The following are potential enhancements, not claims about currently implemented functionality:
+
+- Add GitHub repository and live-demo links for individual projects.
+- Replace project preview placeholders with real project screenshots.
+- Add GitHub and LinkedIn profile links where appropriate.
+- Introduce automated tests and continuous integration checks.
+- Consider additional theme variants.
+
+---
+
+*Portfolio content, projects, skills, and process details are maintained in `src/data/portfolio.ts`.*
