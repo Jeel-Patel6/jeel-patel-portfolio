@@ -13,6 +13,16 @@ const block = {
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
 };
 
+/**
+ * Modal billboard media: the real screenshot when one is configured (matching
+ * the card image so the card→modal morph stays seamless), otherwise the
+ * art-directed placeholder. Decorative here — the same screenshot is rendered
+ * with full alt text in the Screenshots section below.
+ */
+function BillboardShot({ src }: { src: string }) {
+  return <img src={src} alt="" loading="lazy" decoding="async" className="absolute inset-0 h-full w-full object-cover object-top" />;
+}
+
 export default function ProjectModal({ project, onClose, onSwitch }: { project: Project; onClose: () => void; onSwitch: (p: Project) => void }) {
   useScrollLock(true);
   const scroller = useRef<HTMLDivElement>(null);
@@ -84,11 +94,11 @@ export default function ProjectModal({ project, onClose, onSwitch }: { project: 
           <div className="relative h-[52vh] min-h-[340px] overflow-hidden sm:rounded-t-2xl">
             {morph ? (
               <motion.div layoutId={`art-${project.id}`} className="absolute inset-0" transition={{ duration: 0.7, ease: EASE }}>
-                <ProjectArt project={project} />
+                {project.preview ? <BillboardShot src={project.preview} /> : <ProjectArt project={project} />}
               </motion.div>
             ) : (
               <div className="absolute inset-0">
-                <ProjectArt project={project} />
+                {project.preview ? <BillboardShot src={project.preview} /> : <ProjectArt project={project} />}
               </div>
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
@@ -156,6 +166,39 @@ export default function ProjectModal({ project, onClose, onSwitch }: { project: 
                   </Magnetic>
                 )}
               </motion.div>
+            )}
+
+            {/* technical screenshots — full, uncropped views of the evidence shots */}
+            {(project.preview || (project.gallery && project.gallery.length > 0)) && (
+              <motion.section variants={block} className="mt-10" aria-label="Project screenshots">
+                <h3 className="mb-4 text-[11px] font-bold uppercase tracking-[0.3em] text-blue">Screenshots</h3>
+                <div className={`grid items-start gap-4 ${project.gallery && project.gallery.length > 0 ? 'sm:grid-cols-2' : ''}`}>
+                  {project.preview && (
+                    <figure className="overflow-hidden rounded-xl bg-surface ring-1 ring-line">
+                      <img
+                        src={project.preview}
+                        alt={project.previewAlt ?? `${project.title} screenshot`}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-auto w-full"
+                      />
+                      {project.previewCaption && (
+                        <figcaption className="border-t border-line px-4 py-2.5 text-xs leading-snug text-mute">
+                          {project.previewCaption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  )}
+                  {project.gallery?.map((shot) => (
+                    <figure key={shot.src} className="overflow-hidden rounded-xl bg-surface ring-1 ring-line">
+                      <img src={shot.src} alt={shot.alt} loading="lazy" decoding="async" className="h-auto w-full" />
+                      {shot.caption && (
+                        <figcaption className="border-t border-line px-4 py-2.5 text-xs leading-snug text-mute">{shot.caption}</figcaption>
+                      )}
+                    </figure>
+                  ))}
+                </div>
+              </motion.section>
             )}
 
             {/* impact */}

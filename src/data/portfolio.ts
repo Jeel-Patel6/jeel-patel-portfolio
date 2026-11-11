@@ -38,6 +38,9 @@ export const education = [
 
 export type Metric = { value: string; label: string };
 
+/** A technical screenshot attached to a project, with meaningful alt text. */
+export type ProjectShot = { src: string; alt: string; caption?: string };
+
 export type Project = {
   id: string;
   title: string;
@@ -58,10 +61,16 @@ export type Project = {
   github?: string;
   demo?: string;
   /**
-   * Real screenshot of the project UI (e.g. '/assets/previews/crop.png').
+   * Real screenshot of the project UI (e.g. '/images/projects/landslide-dashboard.png').
    * When absent, cards show an intentional art-directed "PROJECT PREVIEW" placeholder.
    */
   preview?: string;
+  /** Meaningful alt text for the preview screenshot (falls back to "<title> screenshot"). */
+  previewAlt?: string;
+  /** Short caption shown with the preview screenshot in the project modal. */
+  previewCaption?: string;
+  /** Additional technical screenshots (e.g. data-cleaning evidence) shown in the project modal. */
+  gallery?: ProjectShot[];
   palette: Palette;
   motif: 'crop' | 'safety' | 'predict' | 'portal' | 'shield' | 'flow' | 'tenants';
 };
@@ -84,6 +93,10 @@ export const projects: Project[] = [
       'Data-driven crop suitability evaluation',
     ],
     metrics: [],
+    preview: '/images/projects/crop-recommendation.png',
+    previewAlt:
+      'Crop recommendation system using soil nutrients, temperature, humidity, rainfall, and soil pH inputs',
+    previewCaption: 'Crop recommendation from soil and climate inputs',
     palette: { from: '#03150f', via: '#0d5a40', to: '#050a08', accent: '#46e3a8' },
     motif: 'crop',
   },
@@ -104,6 +117,10 @@ export const projects: Project[] = [
       'Intelligent scenario evaluation',
     ],
     metrics: [],
+    preview: '/images/projects/landslide-dashboard.png',
+    previewAlt:
+      'Landslide monitoring and safety dashboard showing live risk levels, sensor readings, and alert status',
+    previewCaption: 'Monitoring and safety dashboard',
     palette: { from: '#24060b', via: '#6e0d1d', to: '#09070a', accent: '#ff3d5a' },
     motif: 'safety',
   },
@@ -126,6 +143,17 @@ export const projects: Project[] = [
     metrics: [
       { value: '3', label: 'team members collaboration' },
     ],
+    preview: '/images/projects/car-dataset-overview.png',
+    previewAlt:
+      'Original car dataset overview showing the table structure and columns used for price prediction',
+    previewCaption: 'Dataset overview — original structure and columns',
+    gallery: [
+      {
+        src: '/images/projects/car-data-cleaning.png',
+        alt: 'Car dataset during cleaning, showing missing-value handling applied to the raw columns',
+        caption: 'Data cleaning — missing-value handling',
+      },
+    ],
     palette: { from: '#1c1003', via: '#6b3c06', to: '#0a0806', accent: '#ffb547' },
     motif: 'predict',
   },
@@ -146,6 +174,10 @@ export const projects: Project[] = [
       'Responsive academic management interface',
     ],
     metrics: [],
+    preview: '/images/projects/university-portal.png',
+    previewAlt:
+      'University portal with attendance management, assignment submission, results and grade tracking, student and faculty roles, notifications, and course management',
+    previewCaption: 'University portal — attendance, assignments, results, and notifications',
     palette: { from: '#04121f', via: '#0f4c6e', to: '#05080d', accent: '#4cc9ff' },
     motif: 'portal',
   },

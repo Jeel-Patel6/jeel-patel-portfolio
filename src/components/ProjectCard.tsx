@@ -38,12 +38,12 @@ export default function ProjectCard({ project, index, onOpen }: { project: Proje
                 {project.preview ? (
                   <img
                     src={project.preview}
-                    alt={`${project.title} screenshot`}
+                    alt={project.previewAlt ?? `${project.title} screenshot`}
                     width={1600}
                     height={1000}
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover object-top"
                   />
 
                 ) : (
