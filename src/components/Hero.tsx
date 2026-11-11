@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { profile, projects } from '../data/portfolio';
 import { useSmoothScroll } from '../hooks/smoothScroll';
